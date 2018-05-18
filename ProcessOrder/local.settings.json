@@ -1,0 +1,10 @@
+{
+    "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "<Put your Azure Storage connection string here>",
+    "AzureWebJobsDashboard": "<Put your Azure Storage connection string here>",
+    "CosmosDbConnectionString": "<Put your Cosmos DB connection string here>",
+    "EndpointUrl": "<Put your Cosmos DB URI here>",
+    "PrimaryKey": "<Put your Cosmos DB primary key here>"
+  }
+}

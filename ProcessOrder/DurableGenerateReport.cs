@@ -23,14 +23,20 @@ namespace ProcessOrder
         {
             var tasks = new List<Task<OrderDetails>>();
             var orderTotals = new List<double>();
+
+            // Get all transactions from Cosmos
             var transactions = await context.CallActivityAsync<IEnumerable<StripeCharge>>("Durable_GetTransactions", 100);
             
             foreach(var transaction in transactions)
             {
+                // Create a task to lookup in the information on the order
                 tasks.Add(context.CallActivityAsync<OrderDetails>("Durable_GetOrderProcess", transaction));
             }
 
+            // Execution all those tasks IN PARALLEL
             await Task.WhenAll(tasks);
+
+            // Summarize the results
             return from details in tasks
                    group details by details.Result.status into s
                    select new { status = s.Key.ToString(), count = s.Count() };

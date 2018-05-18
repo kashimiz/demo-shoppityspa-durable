@@ -12,7 +12,7 @@ namespace ProcessOrder
     public static class ChargeStripe
     {
         private static StripeChargeService chargeService = new StripeChargeService();
-        
+        private static string StripeApiKey = Environment.GetEnvironmentVariable("StripeApiKey");
 
         [FunctionName("ChargeStripe")]
         public static async Task<IActionResult> Run(
@@ -21,7 +21,8 @@ namespace ProcessOrder
             TraceWriter log)
         {
             log.Info("Order trigger function processed a request.");
-            StripeConfiguration.SetApiKey("sk_test_BQokikJOvBiI2HlWgH4olfQ2");
+
+            StripeConfiguration.SetApiKey("StripeApiKey");
 
             // Creating the charge for the credit card
             var chargeOptions = new StripeChargeCreateOptions()
